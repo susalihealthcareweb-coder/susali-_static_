@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* ── SUSALI brand tokens (light theme). Colours read from the live susali.in CSS where they exist. ── */
+@theme {
+  --color-ink: #2b303c;        /* headings (live --og-ink) */
+  --color-slate: #444a58;      /* body (live --og-slate) */
+  --color-muted: #6f7181;      /* secondary text (live --muted) */
+  --color-mauve: #7b6496;      /* eyebrows, accents (AA on white) */
+  --color-mauve-2: #8f73a0;    /* live --susali-lavender-solid */
+  --color-grad-from: #615c88;  /* live --susali-lavender-start */
+  --color-grad-to: #b68bad;    /* live --susali-lavender-end */
+  --color-lavender: #f7f5fb;
+  --color-wash: #f7f3fb;       /* live hero wash */
+  --color-line: #e9e5ee;       /* live --line */
+  --color-green: #1e4a3a;
+  --color-green-2: #163a2d;
+  --color-gold: #c9a24b;
+  --color-navy-btn: #2e3247;
+  --color-hero-from: #5e4e86;
+  --color-hero-to: #a98bb5;
+  --color-p-lav: #efe8f7;
+  --color-p-mint: #e3f4ee;
+  --color-p-peach: #fcebdd;
+  --color-p-pink: #fde7ec;
+
+  --font-heading: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: var(--font-inter), Inter, system-ui, sans-serif;
+
+  --radius-card: 22px;
+  --shadow-soft: 0 10px 30px -12px rgb(97 92 136 / 0.18), 0 2px 6px -2px rgb(43 48 60 / 0.06);
+  --shadow-lift: 0 26px 50px -18px rgb(97 92 136 / 0.32), 0 6px 14px -6px rgb(43 48 60 / 0.08);
+}
+
+:root { color-scheme: light; }
+html { background: #fff; -webkit-text-size-adjust: 100%; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  background: #fff;
+  color: var(--color-slate);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+html[lang="te"] body { font-family: var(--font-telugu), var(--font-body); }
+html[lang="te"] .font-heading { font-family: var(--font-telugu), var(--font-heading); letter-spacing: -0.01em !important; line-height: 1.3 !important; }
+
+.font-heading { font-family: var(--font-heading); }
+
+/* Gradient accent for headline line 2 */
+.text-grad {
+  background: linear-gradient(100deg, var(--color-grad-from) 0%, var(--color-mauve-2) 45%, var(--color-grad-to) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-bottom: 0.08em; /* avoid descender clipping */
+}
+
+/* Masked line reveal */
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+.line-inner { display: block; will-change: transform; }
+
+/* Focus states */
+:focus-visible { outline: 2px solid var(--color-mauve); outline-offset: 3px; border-radius: 8px; }
+
+/* Custom cursor (desktop, fine pointers only) */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor, html.has-cursor a, html.has-cursor button { cursor: none; }
+  html.has-cursor input, html.has-cursor textarea, html.has-cursor select { cursor: text; }
+}
+
+/* Soft pastel washes */
+.wash-hero { background:
+  radial-gradient(60% 50% at 85% 10%, rgb(239 232 247 / 0.9), transparent 70%),
+  radial-gradient(50% 45% at 5% 90%, rgb(227 244 238 / 0.7), transparent 70%),
+  radial-gradient(40% 40% at 40% 40%, rgb(253 231 236 / 0.45), transparent 70%), #fff; }
+.wash-lav { background:
+  radial-gradient(55% 60% at 100% 0%, rgb(253 231 236 / 0.55), transparent 70%),
+  radial-gradient(50% 60% at 0% 100%, rgb(227 244 238 / 0.55), transparent 70%), var(--color-lavender); }
+
+/* Frame canvas blends into white page: soft white edge fade */
+.seq-fade::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to bottom, #fff 0%, transparent 12%, transparent 88%, #fff 100%),
+    linear-gradient(to right, #fff 0%, transparent 10%, transparent 90%, #fff 100%);
+}
+
+.dotted-path { stroke-dasharray: 2 7; stroke-linecap: round; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* Softly floating pastel circles (transform only) */
+@keyframes float-y { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-14px,0); } }
+.float { animation: float-y 6s ease-in-out infinite; }
+.float-2 { animation: float-y 7.5s ease-in-out -2s infinite; }
+.float-3 { animation: float-y 9s ease-in-out -4s infinite; }
+@keyframes scroll-dot { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(14px); opacity: 0; } }
+.scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
+
+/* ── Floating style: glass cards, icon tiles, CSS spheres ───────────────── */
+.glass {
+  background: rgb(255 255 255 / 0.76);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow: 0 18px 40px -16px rgb(110 90 160 / 0.28), 0 2px 8px -2px rgb(110 90 160 / 0.08);
+}
+.glass-hover { transition: translate .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s; }
+.glass-hover:hover { translate: 0 -4px; box-shadow: 0 28px 56px -18px rgb(110 90 160 / 0.4), 0 4px 12px -4px rgb(110 90 160 / 0.12); }
+
+.sphere { border-radius: 9999px; }
+.sphere-teal {
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #c9fbf6 9%, #4fd9cf 38%, #14a8b8 70%, #0b7f97 100%);
+  box-shadow: inset -10px -14px 26px rgb(4 70 90 / 0.35), inset 8px 8px 18px rgb(255 255 255 / 0.45), 0 22px 36px -14px rgb(20 168 184 / 0.5);
+}
+.sphere-lav {
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #efe6fb 10%, #c3aae6 42%, #9a7cc9 75%, #7a5cae 100%);
+  box-shadow: inset -10px -14px 26px rgb(70 40 110 / 0.28), inset 8px 8px 18px rgb(255 255 255 / 0.5), 0 22px 36px -14px rgb(122 92 174 / 0.45);
+}
+.sphere-pink {
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #ffe6ee 10%, #f6a9c3 45%, #e17ba0 78%, #c95c86 100%);
+  box-shadow: inset -8px -12px 22px rgb(120 30 70 / 0.25), inset 6px 6px 14px rgb(255 255 255 / 0.5), 0 18px 30px -12px rgb(225 123 160 / 0.45);
+}
+.sphere-glass {
+  background: radial-gradient(circle at 30% 24%, rgb(255 255 255 / 0.95) 0 5%, rgb(255 255 255 / 0.25) 14%, rgb(214 198 240 / 0.08) 55%, rgb(255 255 255 / 0.35) 100%);
+  border: 1px solid rgb(255 255 255 / 0.7);
+  box-shadow: inset 0 0 22px rgb(255 255 255 / 0.55), inset -6px -10px 18px rgb(150 120 200 / 0.12), 0 12px 30px -12px rgb(120 100 170 / 0.25);
+}
+
+/* Hero photo blob mask */
+.blob-mask { border-radius: 44px 44px 48% 52% / 44px 44px 24% 22%; }
+
+/* ECG heartbeat loop */
+@keyframes ecg-run { from { stroke-dashoffset: 100; } to { stroke-dashoffset: -100; } }
+.ecg-line { stroke-dasharray: 100; stroke-dashoffset: 100; animation: ecg-run 3s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .ecg-line { animation: none !important; stroke-dasharray: none; stroke-dashoffset: 0; } }
